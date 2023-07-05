@@ -1,0 +1,9 @@
+line_num=1 
+
+if [ ! -z $1 ]; then
+    line_num=$1
+fi
+
+res=$(sed -n ${line_num}p)
+
+echo $res

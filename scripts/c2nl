@@ -1,0 +1,4 @@
+#
+# comma to newline
+#
+tr -s ',' '\n'

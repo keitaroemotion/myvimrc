@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+if [ "$1" == "-b" ]; then
+    files=$(find . -perm +111 -type f | grep -v .git)
+    len=$(echo $files | tr -s ' ' '\n' | wc -l)
+else
+    files=$(find . -type f -not -empty | grep -v git | grep -v .class | grep -v .png | grep -v .ico | grep -v .jpg | grep -v .PNG | grep -v .gif)
+    len=$(echo $files | tr -s ' ' '\n' | wc -l)
+fi
+
+#idx=$(echo $((1 + RANDOM % $len)))
+idx=$(echo $((RANDOM % $len)))
+i=0
+target_file=$file
+for file in $files; do
+    if [ "$i" == "$idx" ]; then
+        target_file=$file
+    fi
+    i=$((i+1))
+done
+echo $target_file

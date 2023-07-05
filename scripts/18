@@ -1,0 +1,6 @@
+word=$1
+file=$HOME/.trans
+
+res=$(cat $file | grep $word | sed -n 1p | sed 's/  //g' | sed 's/|/:/g')
+echo $res
+echo $res | pbcopy

@@ -1,0 +1,17 @@
+set -ex
+rm -rf ~/.vim
+./scripts/easy-install
+mkdir -p ~/.vim/pack/tpope/start
+cd ~/.vim/pack/tpope/start
+git clone https://tpope.io/vim/fugitive.git
+vim -u NONE -c "helptags fugitive/doc" -c q
+cd ~/.vim
+curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh > install.sh
+sh ./install.sh
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+mkdir -p ~/.vim/bundle
+vim +PluginInstall +qall
+vim +NeoBundleInstall +qall
+mkdir -p $HOME/.vim/scripts
+cp scripts/* $HOME/.vim/scripts
+cp aliases/* /usr/local/bin
