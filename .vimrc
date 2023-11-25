@@ -1,21 +1,23 @@
+autocmd BufRead * :%s/\s*$//g
+
 :command! -nargs=0 SJIS :call SJIS()
-function SJIS() 
+function SJIS()
     execute ":e ++enc=sjis"
 endfunction
 
 :command! -nargs=0 Lint :call Lint()
-function Lint() 
+function Lint()
    let result = system('lint ' . @%)
    echo result
 endfunction
 
 :command! -nargs=0 Doko :call Doko()
-function Doko() 
-    execute ":! doko " . expand("<cWORD>") 
+function Doko()
+    execute ":! doko " . expand("<cWORD>")
 endfunction
 
 :command! -nargs=0 Strings :call Strings()
-function Strings() 
+function Strings()
    let assfile = @% . ".strings"
    let result = system('strings ' . @% . ' >> ' . assfile)
    exe 'edit ' . assfile
@@ -53,7 +55,7 @@ function! Blame()
 endfunction
 
 :command! -nargs=? Trans :call Trans(<f-args>)
-function Trans(...) 
+function Trans(...)
   if a:0 >=1
     let result = system(g:script_dir . "18 " . a:1)
   else
@@ -63,31 +65,31 @@ function Trans(...)
 endfunction
 
 :command! -nargs=? Toenglish :call Toenglish(<f-args>)
-function Toenglish(...) 
+function Toenglish(...)
   if a:0 >=1
     let result = system("translate -s ja -t en " . a:1)
   else
     let line = getline(".")
     let result = system("translate -s ja -t en " . line)
-  endif    
+  endif
   put =result
 endfunction
 
 :command! -nargs=? Tocamelenglish :call Tocamelenglish(<f-args>)
-function Tocamelenglish(...) 
+function Tocamelenglish(...)
   if a:0 >=1
     let result = system("translate -s ja -t en " . a:1 . "| sed \"s/'//g\" | xs tocamel")
   else
     let line = getline(".")
     let result = system("translate -s ja -t en " . line . "| sed \"s/'//g\" | xs tocamel")
-  endif    
+  endif
   put =result
 endfunction
 
 :command! -nargs=? Bash :call Bash(<f-args>)
-function Bash(...) 
+function Bash(...)
   if a:0 >=1
-    "echo a:000  
+    "echo a:000
     let result = system("" . a:1)
   else
      let result = system("ls")
@@ -98,7 +100,7 @@ endfunction
 map q <Nop>
 
 :command! -nargs=1 Rename :call Rename(<f-args>)
-function Rename(...) 
+function Rename(...)
    if a:0 >=1
        let root    = system("pwd")
        let file_path = root . '/' . @%
@@ -106,27 +108,27 @@ function Rename(...)
        let new_file_path = root . '/' . dirname . "/" . a:1
        let cmd = substitute("mv " . file_path . ' ' . new_file_path, '\n', '', 'g')
        let result = system(cmd)
-       let dirname_1 = substitute(dirname, '\n', '', 'g') 
+       let dirname_1 = substitute(dirname, '\n', '', 'g')
        exe 'edit ' . dirname_1 . "/" . a:1
    else
    endif
 endfunction
 
 :command! -nargs=0 Branchprint :call Branchprint()
-function Branchprint() 
+function Branchprint()
    let result = system('git rev-parse --abbrev-ref HEAD')[:-2] . ' '
    put =result
 endfunction
 
 :command! -nargs=0 Nm :call Nm()
-function Nm() 
+function Nm()
    let assfile = @% . ".nm"
    let result = system('nm ' . @% . ' >> ' . assfile)
    exe 'edit ' . assfile
 endfunction
 
 :command! -nargs=0 Otool :call Otool()
-function Otool() 
+function Otool()
    let assfile = @% . ".asm"
    let result = system('otool -tvVI ' . @% . ' >> ' . assfile)
    exe 'edit ' . assfile
@@ -152,7 +154,7 @@ function! Repeat()
     exe ":normal a" . repeat(char, times)
 endfunction
 
-"inoremap <C-c> <Esc> 
+"inoremap <C-c> <Esc>
 
 "
 " better experience in VIM insert mode
@@ -163,7 +165,7 @@ inoremap <C-f> <Right>
 " inoremap <C-k> <Up>
 
 
-nnoremap い i 
+nnoremap い i
 nnoremap お o
 nnoremap O O
 
@@ -230,7 +232,7 @@ nnoremap <C-n> 5j
 nnoremap <C-p> 5k
 vnoremap <C-n> 5j
 vnoremap <C-p> 5k
-vnoremap <C-y> "*y 
+vnoremap <C-y> "*y
 nnoremap x "_x
 tnoremap <C-z> exit<cr>
 nnoremap s "_s
@@ -246,11 +248,11 @@ nmap # <Space><Space>:%s/<C-r>///g<Left><Left>
 xnoremap <silent> <Space> mz:call <SID>set_vsearch()<CR>:set hlsearch<CR>`z
 xnoremap * :<C-u>call <SID>set_vsearch()<CR>/<C-r>/<CR>
 xmap # <Space>:%s/<C-r>///g<Left><Left>
- 
+
 :command! -nargs=0 Comit :call Comit()
 function! Comit()
   let branch = substitute(system("git rev-parse --abbrev-ref HEAD"), '\n', '', 'g')
-  let result = branch . ' #comment fix: xxx' 
+  let result = branch . ' #comment fix: xxx'
   put =result
 endfunction
 
@@ -309,7 +311,7 @@ nnoremap <C-z> :q!<CR>
 "  powerful search
 "
 nnoremap S :e **/
-"nnoremap S :find  
+"nnoremap S :find
 
 "
 "  yank and paste
@@ -340,35 +342,35 @@ command CDC cd %:p:h
 nnoremap <C-x>j :n<CR>
 nnoremap <C-x>k :N<CR>
 
-  
+
 set hlsearch
 hi Search ctermbg=LightYellow
 hi Search ctermfg=DarkRed
 set noautoindent
 set smartindent
 set runtimepath+=~/.vim/bundle/neobundle.vim/
-"  
+"
 "  syntax keyword WordError teh
-"  
+"
 "when vimgrep/grep
 " nnoremap <C-j> :cn<CR>
 " nnoremap <C-k> :cN<CR>
 
 nnoremap <C-,> :Trans<CR>
 
-"  
+"
 "  if 0 | endif
 "  if &compatible
 "    set nocompatible               " Be iMproved
 "  endif
-"  
+"
 call neobundle#begin(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'rking/ag.vim'
 
 call neobundle#end()
-"  
+"
 "  map <c-q> :call JsBeautify()<cr>
 "  autocmd FileType javascript noremap <buffer> <c-q> :call JsBeautify()<cr>
 "  autocmd FileType json noremap <buffer> <c-q> :call JsonBeautify()<cr>
@@ -376,7 +378,7 @@ call neobundle#end()
 "  autocmd FileType html noremap <buffer> <c-q> :call HtmlBeautify()<cr>
 "  autocmd FileType gsp  noremap <buffer> <c-q> :call HtmlBeautify()<cr>
 "  autocmd FileType css noremap <buffer> <c-q> :call CSSBeautify()<cr>
-"  
+"
 :command! -nargs=0 Jumps :call Jumps()
 function Jumps()
     let line = getline(".")
@@ -439,14 +441,14 @@ endfunction
 
 :command! -nargs=0 Kj :call Kj()
 function Kj()
-    execute ":e ~/.vim/keikun.vim/bible.txt" 
+    execute ":e ~/.vim/keikun.vim/bible.txt"
 endfunction
 
 :command! -nargs=0 Remove :call Remove()
 function Remove()
     let result = system("rm " . @%)
 endfunction
- 
+
 :command! -nargs=0 Crack :call Crack()
 function Crack()
     let result = system("otool -tvV " . @% . " | pbcopy")
@@ -457,22 +459,22 @@ function Cnv()
    let result = system("cnv " . expand("<cword>"))
    echo result
 endfunction
- 
+
 :command! -nargs=0 Filename :call Filename()
 function Filename()
     let result = system("echo " . @% . " | pbcopy")
 endfunction
-  
+
 "
 " Unix
 "
-command! Sleep call Sleep() 
+command! Sleep call Sleep()
 function! Sleep()
     let file = @%
     let result = system("pmset sleepnow")
 endfunction
 
-command! Cf call Cfind() 
+command! Cf call Cfind()
 function! Cfind()
     let file = @%
     let result = system(g:script_dir . "header-to-cpp " . file)
@@ -507,14 +509,14 @@ function! Tree()
     echo "\n" . result
 endfunction
 
-command! -nargs=1 Touchhere call Touchhere(<f-args>) 
+command! -nargs=1 Touchhere call Touchhere(<f-args>)
 function! Touchhere(filename)
     let fn = a:filename
     let ffn = expand("%:h") . '/' . fn
     e ffn
 endfunction
 
-command! -nargs=1 Touch call Touch(<f-args>) 
+command! -nargs=1 Touch call Touch(<f-args>)
 function! Touch(file)
     let result = system("touch " . a:file)
 endfunction
@@ -533,7 +535,7 @@ function! PsAuxGrep(procquery)
     echo result
 endfunction
 
-command! Cx call Cx() 
+command! Cx call Cx()
 function! Cx()
     let file   = @%
     let result = system("chmod +x " . file)
@@ -543,13 +545,13 @@ endfunction
 "
 " Run myself
 "
-command! -nargs=? Runinter call Runinter(<f-args>) 
+command! -nargs=? Runinter call Runinter(<f-args>)
 function! Runinter(...)
     let postfix = ""
     if a:0 >= 1
         let postfix = a:1
     end
-    
+
     let file   = @%
     let result = system("chmod +x " . file)
     :! "" . file
@@ -558,7 +560,7 @@ endfunction
 "
 " Run myself
 "
-command! -nargs=0 Run call Run() 
+command! -nargs=0 Run call Run()
 function! Run()
     let file   = @%
     let result = system("chmod +x " . file)
@@ -629,9 +631,9 @@ command! Hackernews   call WebOpen("news.ycombinator.com")
 command! Atmarkit     call WebOpen("www.atmarkit.co.jp/ait/subtop/features/special/")
 command! Task         call WebOpen("calendar.google.com/calendar/b/1/r")
 command! Youtube      call WebOpen("youtube.com")
-command! Netflix      call WebOpen("www.netflix.com/browse") 
-command! Sugawiki     call WebOpen("bitbucket.org/keisugano/personal-wiki/src/master/") 
-command! Bible        call WebOpen("www.chinesebibleonline.com") 
+command! Netflix      call WebOpen("www.netflix.com/browse")
+command! Sugawiki     call WebOpen("bitbucket.org/keisugano/personal-wiki/src/master/")
+command! Bible        call WebOpen("www.chinesebibleonline.com")
 command! Hub          call WebOpen("employment.en-japan.com/engineerhub/")
 command! Forbes       call WebOpen("www.forbes.com")
 command! File         call File()
@@ -659,14 +661,14 @@ function! Decidump()
     let result = system("decidump " . @% . ' > ' . decifile)
     exe 'edit ' . decifile
 endfunction
- 
+
 :command! -nargs=0 Hexdump :call Hexdump()
 function! Hexdump()
     let hexfile = @% . ".16"
     let result = system("hexdump -C " . @%. ' > ' . hexfile)
     exe 'edit ' . hexfile
 endfunction
-  
+
 function! File()
     let result = system("file " . @%)
     echo result
@@ -722,12 +724,12 @@ function! Xlook(...)
     let result = system("open https://www.google.com/search?q=" . expand("<cWORD>") . alphaquery)
 endfunction
 
-command! Whatis call WhatIs() 
+command! Whatis call WhatIs()
 function! WhatIs()
     let result = system("open https://www.google.com/search?q=what+is+" . expand("<cword>"))
 endfunction
 
-command! Link call Link() 
+command! Link call Link()
 function! Link()
     let result = system("open " . expand("<cWORD>"))
 endfunction
@@ -746,7 +748,7 @@ function! WebOpen(...)
     let result = system("open https://" . a:1)
 endfunction
 
-command! DockerBuild call DockerBuild() 
+command! DockerBuild call DockerBuild()
 function! DockerBuild()
     let result = system("docker build .")
     echo result
@@ -815,7 +817,7 @@ function! Add(...)
     end
     echo result
     let result = system("git status")
-    echo result 
+    echo result
 endfunction
 
 " Git reset
@@ -862,14 +864,14 @@ function! Log(...)
     end
 endfunction
 
-command Lgit   :vert term ++close lazygit 
-command! Diff call Diff() 
+command Lgit   :vert term ++close lazygit
+command! Diff call Diff()
 function! Diff()
     let result = system("git diff ")
     echo result
 endfunction
 
-command! Cached call Cached() 
+command! Cached call Cached()
 function! Cached()
     let result = system("git diff --cached ")
     echo result
@@ -933,12 +935,12 @@ function Css(...)
     endif
 endfunction
 
-"command! Hx call Hex() 
+"command! Hx call Hex()
 "function! Hex()
 "    let result = system(g:script_dir . "hex2digit " . expand("<cword>"))
 "    echo result
 "endfunction
-  
+
 :command! -nargs=0 Wifi :call Wifi()
 function! Wifi()
     let result = system(expand("~/.vim/keikun.vim/scripts/wifi"))
@@ -956,17 +958,17 @@ endfunction
 
 :command! -nargs=0 Print :call Print()
 function! Print()
-    let text = "println(\"${}\")" 
+    let text = "println(\"${}\")"
     put =text
 endfunction
 
-command! PyEnc call PyEnc() 
+command! PyEnc call PyEnc()
 function! PyEnc(...)
     let text = "# -*- coding: utf-8 -*-"
     put =text
 endfunction
 
-command! Umltemp call Umltemp() 
+command! Umltemp call Umltemp()
 function! Umltemp()
     let text = "@startuml\n\nskinparam monochrome true\nskinparam shadowing false\n\n@enduml"
     put =text
@@ -979,8 +981,8 @@ function! Memoadd(...)
         let message = a:1
     endif
     let current_file_path = @%
-    let current_number    = line(".") 
-    let current_content   = getline(".") 
+    let current_number    = line(".")
+    let current_content   = getline(".")
     let cmd = g:script_dir . "memo --write \"" . current_number . '|' . current_file_path . '|' . current_content . "\""
     echo cmd
     let result = system(cmd)
@@ -1092,7 +1094,7 @@ imap <C-u> <C-o>:call Repeat()<cr>
 :command! -nargs=0  Sql :call OpenSys(g:script_dir . "msq ~/.myst/staging \"" . getline(".") . "\"")
 :command! -nargs=?  Que :call Que(<f-args>)
 
-function! Que(...) 
+function! Que(...)
     if a:0 >= 1
         echo "------------------------------------"
         echo a:1
@@ -1132,8 +1134,8 @@ endfunction
 
 :highlight LineNr ctermfg=black
 
-hi Comment    cterm=None ctermbg=None ctermfg=Gray 
-hi Statement  cterm=None ctermbg=None ctermfg=Gray 
+hi Comment    cterm=None ctermbg=None ctermfg=Gray
+hi Statement  cterm=None ctermbg=None ctermfg=Gray
 hi Identifier cterm=None ctermbg=None ctermfg=Gray
 hi Type       cterm=None ctermbg=None ctermfg=Gray
 hi PreProc    cterm=None ctermbg=None ctermfg=Gray
