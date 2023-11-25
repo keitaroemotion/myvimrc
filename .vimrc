@@ -1,3 +1,8 @@
+:command! -nargs=0 SJIS :call SJIS()
+function SJIS() 
+    execute ":e ++enc=sjis"
+endfunction
+
 :command! -nargs=0 Lint :call Lint()
 function Lint() 
    let result = system('lint ' . @%)
@@ -28,6 +33,7 @@ function! s:get_visual_selection()
     return join(lines, "\n")
 endfunction
 
+nnoremap <S-r> :! make run<CR>
 nnoremap <C-h> :Goto<CR>
 :command! -nargs=? Goto :call Goto()
 
@@ -184,6 +190,16 @@ set statusline=\PATH:\ %r%F\ \ \ \ \LINE:\ %l/%L/%P\ TIME:\ %{strftime('%c')}
 set nowrapscan
 set tags=./tags;$HOME
 filetype off
+
+" Show special characters
+"set list
+"set listchars=tab:>\ ,eol:$
+
+" Highlight trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
+inoremap <S-Tab> <C-V><Tab>
 
 "
 " Package managers
