@@ -211,14 +211,14 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 "Plugin 'tpope/vim-fugitive'
 Plugin 'preservim/nerdtree'
-"Plugin 'vim-airline/vim-airline'
-"Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 call vundle#end()
 
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = '|'
-"let g:airline_theme='soda'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_theme='soda'
 
 "nnoremap <C-s> :NERDTreeToggle<CR>
 nnoremap } :NERDTreeToggle<CR>
