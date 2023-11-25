@@ -1,4 +1,4 @@
-autocmd BufRead * :%s/\s*$//g
+"autocmd BufRead * :%s/\s*$//g
 
 :command! -nargs=0 SJIS :call SJIS()
 function SJIS()
