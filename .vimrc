@@ -1,4 +1,33 @@
-"autocmd BufRead * :%s/\s*$//g
+" Enable YouCompleteMe
+let g:ycm_enable = 1
+
+" Set the Go-specific completion engine
+let g:ycm_go_binary_path = "go"
+let g:ycm_go_disable_tag_highlighting = 1
+
+" Enable omni-completion for Go
+au FileType go setlocal omnifunc=go#Complete
+
+call prop_type_add( 'YCM_HL_parameter', { 'highlight': 'Normal' } )
+let MY_YCM_HIGHLIGHT_GROUP = {
+      \   'typeParameter': 'PreProc',
+      \   'parameter': 'Normal',
+      \   'variable': 'Normal',
+      \   'property': 'Normal',
+      \   'enumMember': 'Normal',
+      \   'event': 'Special',
+      \   'member': 'Normal',
+      \   'method': 'Normal',
+      \   'class': 'Special',
+      \   'namespace': 'Special',
+      \ }
+
+hi link YcmInlayHint Comment
+
+:set complete+=k
+
+"autocmd BufRead *
+nnoremap L :%s/\s*$//g<CR>
 
 :command! -nargs=0 SJIS :call SJIS()
 function SJIS()
@@ -218,7 +247,7 @@ call vundle#end()
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline_theme='soda'
+let g:airline_theme='ayu_dark'
 
 "nnoremap <C-s> :NERDTreeToggle<CR>
 nnoremap } :NERDTreeToggle<CR>
@@ -910,7 +939,7 @@ nnoremap <C-g> :execute ":! open 'https://www.google.com/search?q=" . expand("<c
 nnoremap <C-j> :execute ":! fd " . expand("<cword>")<CR>
 
 
-nnoremap L :Lw<Space>
+" nnoremap L :Lw<Space>
 
 "
 " Layout
@@ -1162,3 +1191,13 @@ function! Count()
     let result = system("wc -m " . @%)
     echo result
 endfunction
+:command! -nargs=0 Bn :call Bn()
+function Bn()
+  execute ":! git-move next"
+endfunction
+
+:command! -nargs=0 Bp :call Bp()
+function Bp()
+  execute ":! git-move prev"
+endfunction
+
