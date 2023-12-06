@@ -1,28 +1,40 @@
-" Enable YouCompleteMe
-let g:ycm_enable = 1
+:command! -nargs=? Makefile :call MakeFile(<f-args>)
+:command! -nargs=? MakeFile :call MakeFile(<f-args>)
+function MakeFile(...)
+    if a:0 >= 1
+        let current_file_path = @%
+        let current_dir_path = fnamemodify(current_file_path, ":h")
+        let new_file_path = current_dir_path . "/" . a:1
+        execute "edit! " . new_file_path
+    end
+endfunction
 
-" Set the Go-specific completion engine
-let g:ycm_go_binary_path = "go"
-let g:ycm_go_disable_tag_highlighting = 1
 
-" Enable omni-completion for Go
-au FileType go setlocal omnifunc=go#Complete
-
-call prop_type_add( 'YCM_HL_parameter', { 'highlight': 'Normal' } )
-let MY_YCM_HIGHLIGHT_GROUP = {
-      \   'typeParameter': 'PreProc',
-      \   'parameter': 'Normal',
-      \   'variable': 'Normal',
-      \   'property': 'Normal',
-      \   'enumMember': 'Normal',
-      \   'event': 'Special',
-      \   'member': 'Normal',
-      \   'method': 'Normal',
-      \   'class': 'Special',
-      \   'namespace': 'Special',
-      \ }
-
-hi link YcmInlayHint Comment
+" " Enable YouCompleteMe
+" let g:ycm_enable = 1
+"
+" " Set the Go-specific completion engine
+" let g:ycm_go_binary_path = "go"
+" let g:ycm_go_disable_tag_highlighting = 1
+"
+" " Enable omni-completion for Go
+" au FileType go setlocal omnifunc=go#Complete
+"
+" call prop_type_add( 'YCM_HL_parameter', { 'highlight': 'Normal' } )
+" let MY_YCM_HIGHLIGHT_GROUP = {
+"       \   'typeParameter': 'PreProc',
+"       \   'parameter': 'Normal',
+"       \   'variable': 'Normal',
+"       \   'property': 'Normal',
+"       \   'enumMember': 'Normal',
+"       \   'event': 'Special',
+"       \   'member': 'Normal',
+"       \   'method': 'Normal',
+"       \   'class': 'Special',
+"       \   'namespace': 'Special',
+"       \ }
+"
+" hi link YcmInlayHint Comment
 
 :set complete+=k
 
