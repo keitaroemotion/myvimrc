@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+
+import os
+import sys 
+import re
+
+# need global macro alias manager (like Makefile)
+#
+# location: ~/.vim/macro
+#
+
+homedir = os.path.expanduser("~")
+
+MACRO_PATH = f"{homedir}/.vim/macro"
+
+# 1. call from vim
+
+with open(MACRO_PATH, 'r') as file:
+    lines = file.readlines()
+    lines.reverse()
+
+commands = {}
+subsets = []
+
+for line in lines:
+    lsp = line.strip()
+    if line.startswith("  "):
+      subsets.append(lsp)
+    elif(re.match(r'^.*\:.*$', line)):
+      key, description = lsp.split(':')
+      commands[key] = (subsets, description.strip())
+      subsets = []
+    elif line.startswith("--"):
+      pass # ignore comment
+
+def exec_commands(xs, file_path):
+    for x in xs:
+        os.system(x.replace('$1', file_path))
+
+def parse_macro_and_execute(xs, xs_all, file_path):
+    i = 0
+    print()
+    cms = []
+    for key, inst_desc in xs.items():
+       inst, desc = inst_desc
+       inst_summary = ' ; '.join(inst)[0:20]
+       cms.append(inst)
+       print(f"[{i}] {desc} [{inst_summary}]")
+       i = i + 1
+    print()
+
+    query = input("Enter: ")
+    if(bool(re.match(r'^\d+$', query))):
+        exec_commands(cms[int(query)], file_path)
+    elif(query.strip() == ''):
+        exec_commands(cms[0], file_path)
+    else:
+        _xs = {}
+        for key, inst_desc in xs.items(): 
+          desc = inst_desc[1]
+          if(query in desc):
+              _xs[key] = inst_desc
+
+        if(len(_xs.keys()) == 0):
+            _xs = xs_all
+        return parse_macro_and_execute(_xs, xs_all, file_path)
+
+file_path = sys.argv[1]
+parse_macro_and_execute(commands, commands, file_path)
