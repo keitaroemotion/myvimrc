@@ -1,8 +1,12 @@
 nnoremap m :Macro<CR>
 
-:command! -nargs=0 Macro :call Macro()
-function Macro()
-    execute ":! ~/.vim/sugavim/bin/gmake " . @%
+:command! -nargs=? Macro :call Macro(<f-args>)
+function Macro(...)
+    let args = ''
+    if a:0 >= 1
+      args = a:1 
+    end
+    execute ":! ~/.vim/sugavim/bin/gmake " . @% . ' ' . args
 endfunction
 
 nnoremap <S-r> :e!<CR>:echo "reloaded!"<CR>

@@ -34,6 +34,7 @@ for line in lines:
       pass # ignore comment
 
 def exec_commands(xs, file_path):
+    arg = ''
     for x in xs:
         if('$2' in x):
             print()
