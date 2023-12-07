@@ -1,4 +1,4 @@
-nnoremap <S-r> :e!<CR>
+nnoremap <S-r> :e!<CR>:echo "reloaded!"<CR>
 nnoremap <S-v> :source ~/.vimrc <CR>:echo "vimscript updated!"<CR>
 
 :command! -nargs=? MakeFile :call MakeFile(<f-args>)
