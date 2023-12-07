@@ -6,7 +6,11 @@ function Macro(...)
     if a:0 >= 1
       args = a:1 
     end
-    execute ":! ~/.vim/sugavim/bin/gmake " . @% . ' ' . args
+    let cmd = "~/.vim/sugavim/bin/gmake " . @% . ' ' . args . "\<CR>"
+    execute ":bot term ++close ++rows=15"
+    while &buftype != 'terminal' | sleep 10m | endwhile
+      startinsert
+      call feedkeys(cmd, 'n')
 endfunction
 
 nnoremap <S-r> :e!<CR>:echo "reloaded!"<CR>
