@@ -3,8 +3,11 @@
 --
 
 exe: execute specific file [in vim current buffer]
-  chmod +x $1
-  ./$1
+    chmod +x $1
+    ./$1
 
 cpu: get cpu usage
-  top -o cpu
+    top -o cpu
+
+swag-compile: 
+    swag-bundle $2

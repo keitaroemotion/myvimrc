@@ -35,7 +35,13 @@ for line in lines:
 
 def exec_commands(xs, file_path):
     for x in xs:
-        os.system(x.replace('$1', file_path))
+        if('$2' in x):
+            print()
+            print(f"[{x}]")
+            arg = input("Give input: [q: quit] ")
+            if(arg.strip() == 'q'):
+                sys.exit()
+        os.system(x.replace('$1', file_path) + ' ' + arg)
 
 def parse_macro_and_execute(xs, xs_all, file_path):
     i = 0
@@ -45,20 +51,26 @@ def parse_macro_and_execute(xs, xs_all, file_path):
        inst, desc = inst_desc
        inst_summary = ' ; '.join(inst)[0:20]
        cms.append(inst)
-       print(f"[{i}] {desc} [{inst_summary}]")
+       if(desc == ''):
+           print(f"[{i}] [{inst_summary}]")
+       else:
+           print(f"[{i}] {desc} [{inst_summary}]")
        i = i + 1
     print()
 
-    query = input("Enter: ")
+    query = input("Enter: [q:quit] ").strip()
     if(bool(re.match(r'^\d+$', query))):
         exec_commands(cms[int(query)], file_path)
-    elif(query.strip() == ''):
+    elif(query == 'q'):
+        sys.exit()
+    elif(len(xs) == 1 and query == ''):
         exec_commands(cms[0], file_path)
     else:
         _xs = {}
         for key, inst_desc in xs.items(): 
           desc = inst_desc[1]
-          if(query in desc):
+          inst = ' '.join(inst_desc[0])
+          if(query in desc or query in inst):
               _xs[key] = inst_desc
 
         if(len(_xs.keys()) == 0):
@@ -68,4 +80,20 @@ def parse_macro_and_execute(xs, xs_all, file_path):
 file_path = ''
 if(len(sys.argv) > 1):
     file_path = sys.argv[1]
-parse_macro_and_execute(commands, commands, file_path)
+
+commands_filtered = commands
+if(len(sys.argv) > 2):
+    args = sys.argv[1:]
+    #
+    # TODO: refactor and eliminate code verbosity here
+    #
+    commands_filtered = {}
+    for key, inst_desc in commands.items(): 
+      desc = inst_desc[1]
+      if(query in desc):
+          commands_filtered[key] = inst_desc
+
+    if(len(commands_filtered.keys()) == 0):
+        commands_filtered = xs_all
+
+parse_macro_and_execute(commands_filtered, commands, file_path)
