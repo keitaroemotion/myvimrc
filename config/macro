@@ -1,0 +1,10 @@
+--
+--  Makefile-like command alias
+--
+
+exe: execute specific file [in vim current buffer]
+  chmod +x $1
+  ./$1
+
+cpu: get cpu usage
+  top -o cpu
