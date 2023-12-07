@@ -1,4 +1,6 @@
-:command! -nargs=? Makefile :call MakeFile(<f-args>)
+nnoremap <S-r> :e!<CR>
+nnoremap <S-v> :source ~/.vimrc <CR>:echo "vimscript updated!"<CR>
+
 :command! -nargs=? MakeFile :call MakeFile(<f-args>)
 function MakeFile(...)
     if a:0 >= 1
@@ -8,7 +10,6 @@ function MakeFile(...)
         execute "edit! " . new_file_path
     end
 endfunction
-
 
 " " Enable YouCompleteMe
 " let g:ycm_enable = 1
@@ -76,7 +77,7 @@ function! s:get_visual_selection()
     return join(lines, "\n")
 endfunction
 
-nnoremap <S-r> :! make run<CR>
+" nnoremap <S-r> :! make run<CR>
 nnoremap <C-h> :Goto<CR>
 :command! -nargs=? Goto :call Goto()
 
