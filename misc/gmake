@@ -11,7 +11,7 @@ import re
 
 homedir = os.path.expanduser("~")
 
-MACRO_PATH = f"{homedir}/.vim/macro"
+MACRO_PATH = f"{homedir}/.vim/sugavim/config/macro"
 
 # 1. call from vim
 
@@ -65,5 +65,7 @@ def parse_macro_and_execute(xs, xs_all, file_path):
             _xs = xs_all
         return parse_macro_and_execute(_xs, xs_all, file_path)
 
-file_path = sys.argv[1]
+file_path = ''
+if(len(sys.argv) > 1):
+    file_path = sys.argv[1]
 parse_macro_and_execute(commands, commands, file_path)

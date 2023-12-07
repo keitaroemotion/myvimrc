@@ -1,3 +1,10 @@
+nnoremap m :Macro<CR>
+
+:command! -nargs=0 Macro :call Macro()
+function Macro()
+    execute ":! ~/.vim/sugavim/bin/gmake " . @%
+endfunction
+
 nnoremap <S-r> :e!<CR>:echo "reloaded!"<CR>
 nnoremap <S-v> :source ~/.vimrc <CR>:echo "vimscript updated!"<CR>
 
@@ -196,7 +203,7 @@ function! Repeat()
     exe ":normal a" . repeat(char, times)
 endfunction
 
-nnoremap <C-c> :Copyall<CR>
+nnoremap <C-s> :Copyall<CR>
 "inoremap <C-c> <Esc>
 
 "
