@@ -195,6 +195,7 @@ function! Repeat()
     exe ":normal a" . repeat(char, times)
 endfunction
 
+nnoremap <C-c> :Copyall<CR>
 "inoremap <C-c> <Esc>
 
 "
@@ -317,6 +318,7 @@ endfunction
 :command! -nargs=0 Copyall :call Copyall()
 function! Copyall()
      let result = system("cat " . @% . " | pbcopy")
+     echo "Copied: [" . @%  . "]"
 endfunction
 
 function! s:set_vsearch()
