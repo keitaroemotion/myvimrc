@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+target_branch=$1
+
+if [ -z $target_branch ]; then
+    echo
+    echo 'you need to specify target branch'
+    echo
+    exit
+fi
+
+set -e
+curr_branch=$(git rev-parse --abbrev-ref HEAD)
+git checkout $target_branch
+git pull
+git checkout $curr_branch
+git merge $target_branch
