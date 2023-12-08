@@ -1,3 +1,12 @@
+:command! -nargs=? Replace :call Replace(<f-args>)
+function! Replace(...)
+    if a:0 >= 1
+      let result = system('~/.vim/sugavim/bin/dtr -r ' . a:1)
+      echo result
+      wa!
+    endif
+endfunction
+
 :command! -nargs=? Wiki :call Wiki(<f-args>)
 function! Wiki(...)
     if a:0 >= 1
