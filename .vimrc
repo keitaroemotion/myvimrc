@@ -1,3 +1,14 @@
+:command! -nargs=? Wiki :call Wiki(<f-args>)
+function! Wiki(...)
+    if a:0 >= 1
+      " let query = a:1 # more than a:1
+      " let files = system("~/.vim/sugavim/bin/wiki q " . query)
+      " execute 'edit ' . file
+    else
+      execute 'edit ~/.vim/sugavim/wiki'
+    endif
+endfunction
+
 
 :command! -nargs=? WikiCreate :call WikiCreate(<f-args>)
 function! WikiCreate(...)
@@ -538,6 +549,9 @@ function Kj()
     execute ":e ~/.vim/keikun.vim/bible.txt"
 endfunction
 
+:command! -nargs=0 Rm :call Remove()
+:command! -nargs=0 Del :call Remove()
+:command! -nargs=0 Delete :call Remove()
 :command! -nargs=0 Remove :call Remove()
 function Remove()
     let result = system("rm " . @%)
@@ -633,32 +647,6 @@ command! Cx call Cx()
 function! Cx()
     let file   = @%
     let result = system("chmod +x " . file)
-    echo result
-endfunction
-
-"
-" Run myself
-"
-command! -nargs=? Runinter call Runinter(<f-args>)
-function! Runinter(...)
-    let postfix = ""
-    if a:0 >= 1
-        let postfix = a:1
-    end
-
-    let file   = @%
-    let result = system("chmod +x " . file)
-    :! "" . file
-endfunction
-
-"
-" Run myself
-"
-command! -nargs=0 Run call Run()
-function! Run()
-    let file   = @%
-    let result = system("chmod +x " . file)
-    let result = system(file)
     echo result
 endfunction
 
