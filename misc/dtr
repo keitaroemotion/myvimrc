@@ -1,0 +1,26 @@
+# code deleter
+
+option=$1
+search_pattern=$2
+replacement_text=$3
+
+if [ $option == '-r' ]; then
+    for file in $(git ls-files); do
+        if grep -q "$search_pattern" "$file"; then
+            # sed -i '' "s/$search_pattern/$replacement_text/g" "$file"
+            sed -i '' "/$search_pattern/d" "$file"
+            echo "Replaced in $file"
+        fi
+    done
+elif [ $option == '-d' ]; then
+    for file in $(git ls-files); do
+        if grep -q "$search_pattern" "$file"; then
+            # sed -i '' "s/$search_pattern/$replacement_text/g" "$file"
+            sed -i '' "/$search_pattern/d" "$file"
+            echo "Replaced in $file"
+        fi
+    done
+else
+    echo "dtr -r [search_pattern] [replacement_text]  .... replace matching pattern"
+    echo "dtr -d [search_pattern]                     .... delete matching pattern"
+fi

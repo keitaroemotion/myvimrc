@@ -18,8 +18,8 @@ function! WikiCreate(...)
     end
 endfunction
 
-:command! -nargs=0 ExecuteMyself :call ExecuteMyself()
-function! ExecuteMyself()
+:command! -nargs=0 RunMyself :call RunMyself()
+function! RunMyself()
     echo 'belowright terminal ' . ' ./' . @%
     execute 'belowright terminal ' . @%
 endfunction
