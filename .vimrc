@@ -1,9 +1,20 @@
+:command! -nargs=? Delete :call Delete(<f-args>)
+function! Delete(...)
+    if a:0 >= 1
+      let result = system('~/.vim/sugavim/bin/dtr -d ' . a:1)
+      echo result
+      wa!
+      e!
+    endif
+endfunction
+
 :command! -nargs=? Replace :call Replace(<f-args>)
 function! Replace(...)
     if a:0 >= 1
       let result = system('~/.vim/sugavim/bin/dtr -r ' . a:1)
       echo result
       wa!
+      e!
     endif
 endfunction
 
@@ -550,8 +561,6 @@ function Move(newname)
     execute ":f " . a:newname . "|call delete(expand('#'))"
 endfunction
 
-:command! Delete :call delete(expand('#'))
-
 :command! -nargs=0 Kj :call Kj()
 function Kj()
     execute ":e ~/.vim/keikun.vim/bible.txt"
@@ -559,7 +568,6 @@ endfunction
 
 :command! -nargs=0 Rm :call Remove()
 :command! -nargs=0 Del :call Remove()
-:command! -nargs=0 Delete :call Remove()
 :command! -nargs=0 Remove :call Remove()
 function Remove()
     let result = system("rm " . @%)
