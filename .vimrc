@@ -231,20 +231,24 @@ nnoremap <C-x><C-f> :e
 nnoremap C :!
 nnoremap <Down>  :res -5<CR>
 nnoremap <Up>    :res +5<CR>
-"nnoremap <Left>  :vertical res -5<CR>
-"nnoremap <Right> :vertical res +5<CR>
-nnoremap <Right> :GitMoveRight<CR>
-nnoremap <Left> :GitMoveLeft<CR>
+nnoremap <Left>  :vertical res -5<CR>
+nnoremap <Right> :vertical res +5<CR>
 
-:command! -nargs=0 GitMoveRight :call GitMoveRight()
-function GitMoveRight()
+:command! -nargs=0 Bc :call Bc() " Branch current
+function Bc()
+    let cmd = 'git branch'
+    execute 'belowright terminal ' . cmd
+endfunction
+
+:command! -nargs=0 Bn :call Bn() " Branch next
+function Bn()
     let cmd = "~/.vim/sugavim/bin/git-move next \<CR>"
     echo system(cmd)
     wa!
 endfunction
 
-:command! -nargs=0 GitMoveLeft :call GitMoveLeft()
-function GitMoveLeft()
+:command! -nargs=0 Bp :call Bp() " Branch previous
+function Bp()
     let cmd = "~/.vim/sugavim/bin/git-move prev \<CR>"
     echo system(cmd)
     wa!
@@ -1220,13 +1224,3 @@ function! Count()
     let result = system("wc -m " . @%)
     echo result
 endfunction
-:command! -nargs=0 Bn :call Bn()
-function Bn()
-  execute ":! git-move next"
-endfunction
-
-:command! -nargs=0 Bp :call Bp()
-function Bp()
-  execute ":! git-move prev"
-endfunction
-
