@@ -1036,46 +1036,9 @@ function! Umltemp()
     put =text
 endfunction
 
-:command! -nargs=? Memoadd :call Memoadd(<f-args>)
-function! Memoadd(...)
-    let message = ''
-    if a:0 >= 1
-        let message = a:1
-    endif
-    let current_file_path = @%
-    let current_number    = line(".")
-    let current_content   = getline(".")
-    let cmd = g:script_dir . "memo --write \"" . current_number . '|' . current_file_path . '|' . current_content . "\""
-    echo cmd
-    let result = system(cmd)
-    echo "\n------ ADDED! -------\n"
-    echo result
-endfunction
-
-:command! -nargs=0 Memos :call Memos()
-function! Memos()
-    let cmd    = g:script_dir . "memo --list"
-    let result = system(cmd)
-    echo "\n------ MEMOS -------\n"
-    echo result
-endfunction
-
-:command! -nargs=? Memopen :call Memoread(<f-args>)
-function! Memoread(...)
-    let message = ""
-    if a:0 >= 1
-        let message = a:1
-        let cmd             = g:script_dir . "memo --read " . message
-        let result          = system(cmd)
-        let filename_number = split(result, " ")
-        let l:filename      = filename_number[0]
-        let l:number        = filename_number[1]
-        execute 'edit ' . l:filename
-        execute '' . l:number
-    else
-        echo "\nChoose one:\n\n"
-        Memos
-    endif
+:command! -nargs=0 Memo :call Memo()
+function! Memo()
+   execute "edit ~/memo" 
 endfunction
 
 :command! -nargs=1 Nmap :call Nmap(<f-args>)
