@@ -7,6 +7,7 @@ mkdir -p $SUGAVIM_BIN
 mkdir -p $SUGAVIM_CFG
 
 cp misc/*   $SUGAVIM_BIN
+# cp -i bin/*    /usr/local/bin
 cp config/* $SUGAVIM_CFG
 
 chmod +x $SUGAVIM_BIN/*
