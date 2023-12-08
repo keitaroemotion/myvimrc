@@ -240,12 +240,14 @@ nnoremap <Left> :GitMoveLeft<CR>
 function GitMoveRight()
     let cmd = "~/.vim/sugavim/bin/git-move next \<CR>"
     echo system(cmd)
+    wa!
 endfunction
 
 :command! -nargs=0 GitMoveLeft :call GitMoveLeft()
 function GitMoveLeft()
     let cmd = "~/.vim/sugavim/bin/git-move prev \<CR>"
     echo system(cmd)
+    wa!
 endfunction
 
 imap <C-u> <C-o>:call Repeat()<cr>
