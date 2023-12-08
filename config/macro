@@ -11,3 +11,6 @@ cpu: get cpu usage
 
 swag-compile: 
     swag-bundle $2
+
+update-branch: update current branch to the latest
+    $app/branch_merger main

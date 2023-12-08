@@ -12,6 +12,7 @@ import re
 homedir = os.path.expanduser("~")
 
 MACRO_PATH = f"{homedir}/.vim/sugavim/config/macro"
+MACRO_EXEC_PATH = f"{homedir}/.vim/sugavim/bin"
 
 # 1. call from vim
 
@@ -42,13 +43,14 @@ def exec_commands(xs, file_path):
             arg = input("Give input: [q: quit] ")
             if(arg.strip() == 'q'):
                 sys.exit()
-        os.system(x.replace('$1', file_path) + ' ' + arg)
+        os.system(x.replace('$1', file_path).replace('$app', MACRO_EXEC_PATH) + ' ' + arg)
 
 def parse_macro_and_execute(xs, xs_all, file_path):
     i = 0
     print()
     cms = []
-    for key, inst_desc in xs.items():
+    reversed_items = list(xs.items())[::-1]
+    for key, inst_desc in reversed_items:
        inst, desc = inst_desc
        inst_summary = ' ; '.join(inst)[0:20]
        cms.append(inst)
