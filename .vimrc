@@ -9,7 +9,6 @@ function! Wiki(...)
     endif
 endfunction
 
-
 :command! -nargs=? WikiCreate :call WikiCreate(<f-args>)
 function! WikiCreate(...)
     if a:0 >= 1
