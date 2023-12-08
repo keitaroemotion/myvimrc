@@ -231,8 +231,22 @@ nnoremap <C-x><C-f> :e
 nnoremap C :!
 nnoremap <Down>  :res -5<CR>
 nnoremap <Up>    :res +5<CR>
-nnoremap <Left>  :vertical res -5<CR>
-nnoremap <Right> :vertical res +5<CR>
+"nnoremap <Left>  :vertical res -5<CR>
+"nnoremap <Right> :vertical res +5<CR>
+nnoremap <Right> :GitMoveRight<CR>
+nnoremap <Left> :GitMoveLeft<CR>
+
+:command! -nargs=0 GitMoveRight :call GitMoveRight()
+function GitMoveRight()
+    let cmd = "~/.vim/sugavim/bin/git-move next \<CR>"
+    echo system(cmd)
+endfunction
+
+:command! -nargs=0 GitMoveLeft :call GitMoveLeft()
+function GitMoveLeft()
+    let cmd = "~/.vim/sugavim/bin/git-move prev \<CR>"
+    echo system(cmd)
+endfunction
 
 imap <C-u> <C-o>:call Repeat()<cr>
 set path+=**
@@ -353,29 +367,12 @@ set number
 " Say fuck No to the ten key
 "
 nnoremap <C-z> :q!<CR>
-"nnoremap <Up> :echo "No up for you!"<CR>
-"vnoremap <Up> :<C-u>echo "No up for you!"<CR>
-"inoremap <Up> <C-o>:echo "No up for you!"<CR>
-"nnoremap <Down> :echo "No down for you!"<CR>
-"vnoremap <Down> :<C-u>echo "No down for you!"<CR>
-"inoremap <Down> <C-o>:echo "No down for you!"<CR>
-"nnoremap <Left> :echo "No left for you!"<CR>
-"vnoremap <Left> :<C-u>echo "No left for you!"<CR>
-"inoremap <Left> <C-o>:echo "No left for you!"<CR>
-""nnoremap <Right> :echo "No right for you!"<CR>
-"vnoremap <Right> :<C-u>echo "No right for you!"<CR>
-"inoremap <Right> <C-o>:echo "No right for you!"<CR>
 
 "
 "  powerful search
 "
 nnoremap S :e **/
 "nnoremap S :find
-
-"
-"  yank and paste
-"
-"nnoremap <Right> "*yy
 
 "set langmenu=en_US
 "let $LANG = 'en_US'
