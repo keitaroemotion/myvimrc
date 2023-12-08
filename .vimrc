@@ -1,3 +1,13 @@
+
+:command! -nargs=? WikiCreate :call WikiCreate(<f-args>)
+function! WikiCreate(...)
+    if a:0 >= 1
+      let title = a:1
+      let file = system("~/.vim/sugavim/bin/wiki e " . title)
+      execute 'edit ' . file
+    end
+endfunction
+
 :command! -nargs=0 ExecuteMyself :call ExecuteMyself()
 function! ExecuteMyself()
     echo 'belowright terminal ' . ' ./' . @%

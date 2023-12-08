@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+
+#
+# wiki
+#
+# 1. wiki a [query] can enlist the all wiki result
+# 2. wiki q [query] can enlist the queried wiki result
+#                   with brief content view
+# 3. wiki e [title] can create/edit new wiki
+#
+
+# 1. enlist all wiki result
+
+# 2. wiki q query
+
+# 3. wiki e title
+
+import os
+import sys 
+
+homedir = os.path.expanduser("~")
+MACRO_WIKI_PATH = f"{homedir}/.vim/sugavim/wiki"
+
+def edit_wiki(title):
+  file_path = f"{MACRO_WIKI_PATH}/{title}.wiki"
+  # os.system(f"vim {file_path}")
+  return file_path
+
+if(len(sys.argv) < 2):
+    print('you need argument')
+    sys.exit()
+
+OPTION_ALL    = 'a'
+OPTION_EDIT   = 'e'
+OPTION_QUERY  = 's'
+
+if(len(sys.argv) < 2):
+    print('you need argument')
+    sys.exit(1)
+
+option = sys.argv[1]
+
+if(option == OPTION_EDIT):
+    title = '_'.join(sys.argv[2:])
+    print(edit_wiki(title))
