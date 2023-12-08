@@ -1,3 +1,20 @@
+:command! -nargs=0 ExecuteMyself :call ExecuteMyself()
+function! ExecuteMyself()
+    echo 'belowright terminal ' . ' ./' . @%
+    execute 'belowright terminal ' . @%
+endfunction
+
+:command! -nargs=0 Conflicts :call Conflicts()
+function! Conflicts()
+    let diff_files = system('git diff --name-only --diff-filter=U --relative')
+    let files = split(diff_files, "\n")
+    let file_list = filter(files, 'v:val != ""')
+    if len(file_list) > 0
+        let edit_command = ':! vim ' . join(file_list, ' ')
+        execute edit_command
+    endif
+endfunction
+
 nnoremap m :Macro<CR>
 
 :command! -nargs=? Macro :call Macro(<f-args>)
@@ -11,6 +28,11 @@ function Macro(...)
     while &buftype != 'terminal' | sleep 10m | endwhile
       startinsert
       call feedkeys(cmd, 'n')
+endfunction
+
+:command! -nargs=0 MacroOpen :call MacroOpen()
+function MacroOpen()
+    execute "edit ~/.vim/sugavim/config/macro "
 endfunction
 
 nnoremap <S-r> :e!<CR>:echo "reloaded!"<CR>
@@ -947,11 +969,6 @@ function! SortCss()
     let result = system(g:script_dir . "css_formatter " . @%)
     echo result
     :e!
-endfunction
-
-command! ConfWifi call ConfWifi()
-function! ConfWifi()
-    :e ~/.vim/keikun.vim/secrets/wifi.txt
 endfunction
 
 function! SourceVim()
