@@ -102,6 +102,21 @@ function Create(...)
     end
 endfunction
 
+:command! -nargs=? Clone :call Clone(<f-args>)
+function Clone(...)
+    if a:0 >= 1
+        let current_file_path = @%
+        let current_dir_path = fnamemodify(current_file_path, ":h")
+        let new_file_path = current_dir_path . "/" . a:1
+        echo("current_file_path: " . current_file_path)
+        echo("new_file_path: "     . new_file_path)
+        execute(":! cat " . current_file_path . " > " . new_file_path)
+        echo("clone success!")
+        execute "edit! " . new_file_path
+    end
+endfunction
+
+
 " " Enable YouCompleteMe
 " let g:ycm_enable = 1
 "
