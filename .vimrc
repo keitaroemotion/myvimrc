@@ -159,9 +159,11 @@ function Lint()
    echo result
 endfunction
 
-:command! -nargs=0 Doko :call Doko()
-function Doko()
-    execute ":! doko " . expand("<cWORD>")
+:command! -nargs=? Tome :call Tome(<f-args>)
+function Tome(...)
+  if a:0 >=1
+    execute ":! " . a:1 . " " . @%
+  endif
 endfunction
 
 :command! -nargs=0 Strings :call Strings()
