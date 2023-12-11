@@ -1,5 +1,6 @@
 set -e -x
 
+sudo rm -rf ~/.vim/bundle/YouCompleteMe
 ./setup.sh
 brew install cmake
 curl -fLo "${HOME}/.vim/autoload/plug.vim" --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"

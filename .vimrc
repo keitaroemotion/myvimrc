@@ -7,6 +7,7 @@ let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_autoclose_preview_window_after_insertion = 1
 set splitbelow
 
+
 :command! -nargs=0 Today :call Today()
 function! Today()
     let today = strftime("%Y-%m-%d")
@@ -371,7 +372,7 @@ call vundle#end()
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline_theme='ayu_dark'
+let g:airline_theme='badwolf'
 
 "nnoremap <C-s> :NERDTreeToggle<CR>
 nnoremap } :NERDTreeToggle<CR>
@@ -381,10 +382,10 @@ nnoremap Q :b **/*
 nnoremap * :Randopen<CR>
 nnoremap ( :Ranexs<CR>
 nnoremap ) :Ranobj<CR>
-nnoremap <C-n> 5j
-nnoremap <C-p> 5k
-vnoremap <C-n> 5j
-vnoremap <C-p> 5k
+nnoremap <C-n> 8j
+nnoremap <C-p> 8k
+vnoremap <C-n> 8j
+vnoremap <C-p> 8k
 vnoremap <C-y> "*y
 nnoremap x "_x
 tnoremap <C-z> exit<cr>
