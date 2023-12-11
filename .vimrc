@@ -1,3 +1,12 @@
+call plug#begin('~/.vim/plugged')
+Plug 'Valloric/YouCompleteMe'
+call plug#end()
+let g:ycm_global_ycm_extra_conf = '${HOME}/.ycm_extra_conf.py'
+let g:ycm_auto_trigger = 1
+let g:ycm_min_num_of_chars_for_completion = 3
+let g:ycm_autoclose_preview_window_after_insertion = 1
+set splitbelow
+
 :command! -nargs=0 Today :call Today()
 function! Today()
     let today = strftime("%Y-%m-%d")
@@ -115,33 +124,6 @@ function Clone(...)
         execute "edit! " . new_file_path
     end
 endfunction
-
-
-" " Enable YouCompleteMe
-" let g:ycm_enable = 1
-"
-" " Set the Go-specific completion engine
-" let g:ycm_go_binary_path = "go"
-" let g:ycm_go_disable_tag_highlighting = 1
-"
-" " Enable omni-completion for Go
-" au FileType go setlocal omnifunc=go#Complete
-"
-" call prop_type_add( 'YCM_HL_parameter', { 'highlight': 'Normal' } )
-" let MY_YCM_HIGHLIGHT_GROUP = {
-"       \   'typeParameter': 'PreProc',
-"       \   'parameter': 'Normal',
-"       \   'variable': 'Normal',
-"       \   'property': 'Normal',
-"       \   'enumMember': 'Normal',
-"       \   'event': 'Special',
-"       \   'member': 'Normal',
-"       \   'method': 'Normal',
-"       \   'class': 'Special',
-"       \   'namespace': 'Special',
-"       \ }
-"
-" hi link YcmInlayHint Comment
 
 :set complete+=k
 
