@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+#
+# i.e.
+# cal Google Calendar https://calendar.google.com/calendar/u/0/r/week
+#
+import os
+import sys
+import re
+
+homedir = os.path.expanduser("~")
+LINK_PATH=f"{homedir}/.vim/sugavim/config/links"
+
+with open(LINK_PATH, 'r') as file:
+    lines = [x.strip() for x in file.readlines()]
+
+if(len(sys.argv) < 2):
+    print('you need to specify an argument.')
+    sys.exit()
+
+args = sys.argv[1:]
+
+alias = {}
+for line in lines:
+    lsp = line.split(' ')
+    key = lsp[0]
+    url = lsp[-1]
+    description = lsp[1:-1]
+    alias[key] = url
+
+def show_links(lines):
+    for line in lines:
+        lsp = line.split(' ')
+        key = lsp[0]
+        url = lsp[-1]
+        description = lsp[1:-1]
+
+        print(f"key: {key}")
+        print(f"url: {url}")
+        print(f"description: {description}")
+
+print(alias)

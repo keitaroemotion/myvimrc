@@ -7,7 +7,6 @@ let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_autoclose_preview_window_after_insertion = 1
 set splitbelow
 
-
 :command! -nargs=0 Today :call Today()
 function! Today()
     let today = strftime("%Y-%m-%d")
@@ -64,8 +63,8 @@ endfunction
 
 :command! -nargs=0 RunMyself :call RunMyself()
 function! RunMyself()
-    echo 'belowright terminal ' . ' ./' . @%
-    execute 'belowright terminal ' . @%
+    let cmd = 'belowright terminal ./' . @% . ' ' . arg
+    execute cmd
 endfunction
 
 :command! -nargs=0 Conflicts :call Conflicts()
