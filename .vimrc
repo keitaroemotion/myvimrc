@@ -92,8 +92,8 @@ endfunction
 nnoremap <S-r> :e!<CR>:echo "reloaded!"<CR>
 nnoremap <S-v> :source ~/.vimrc <CR>:echo "vimscript updated!"<CR>
 
-:command! -nargs=? MakeFile :call MakeFile(<f-args>)
-function MakeFile(...)
+:command! -nargs=? Create :call Create(<f-args>)
+function Create(...)
     if a:0 >= 1
         let current_file_path = @%
         let current_dir_path = fnamemodify(current_file_path, ":h")
