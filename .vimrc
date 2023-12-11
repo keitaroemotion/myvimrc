@@ -1,3 +1,17 @@
+:command! -nargs=0 Today :call Today()
+function! Today()
+    let today = strftime("%Y-%m-%d")
+    echo today
+    silent call setline(".", today)
+endfunction
+
+:command! -nargs=? Vimrc :call Vimrc(<f-args>)
+function! Vimrc(...)
+    execute 'edit ~/.vimrc'
+endfunction
+
+command! -nargs=0 Unique %sort u
+
 :command! -nargs=? Delete :call Delete(<f-args>)
 function! Delete(...)
     if a:0 >= 1
@@ -1044,7 +1058,7 @@ endfunction
 function! Shebang(...)
     if a:0 >= 1
         let text = "#!/usr/bin/env " . a:1
-        put =text
+        silent call setline(".", text)
     else
     end
 endfunction
