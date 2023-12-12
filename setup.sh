@@ -13,3 +13,10 @@ cp misc/*   $SUGAVIM_BIN
 cp config/* $SUGAVIM_CFG
 
 chmod +x $SUGAVIM_BIN/*
+
+#
+# LLVM
+#
+brew install llvm
+cd ~/.vim/plugged/YouCompleteMe
+./install.py --clangd-completer

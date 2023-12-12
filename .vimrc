@@ -1,6 +1,19 @@
+:command! -nargs=0 OpenAllFiles :call OpenAllFiles()
+function! OpenAllFiles()
+    let diff_files = system('git ls-files')
+    let files = split(diff_files, "\n")
+    let file_list = filter(files, 'v:val != ""')
+    if len(file_list) > 0
+        let edit_command = ':! vim ' . join(file_list, ' ')
+        execute edit_command
+    endif
+endfunction
+
 call plug#begin('~/.vim/plugged')
 Plug 'Valloric/YouCompleteMe'
 call plug#end()
+
+let g:ycm_clangd_binary_path = '/usr/bin/clang'
 let g:ycm_global_ycm_extra_conf = '${HOME}/.ycm_extra_conf.py'
 let g:ycm_auto_trigger = 1
 let g:ycm_min_num_of_chars_for_completion = 3
@@ -84,7 +97,7 @@ nnoremap m :Macro<CR>
 function Macro(...)
     let args = ''
     if a:0 >= 1
-      args = a:1 
+      args = a:1
     end
     let cmd = "~/.vim/sugavim/bin/gmake " . @% . ' ' . args . "\<CR>"
     execute ":bot term ++close ++rows=15"
@@ -309,6 +322,20 @@ nnoremap <Up>    :res +5<CR>
 nnoremap <Left>  :vertical res -5<CR>
 nnoremap <Right> :vertical res +5<CR>
 
+"
+" might be destructive?
+"
+"
+" nnoremap N <C-w>h
+" nnoremap M <C-w>l
+" nnoremap K <C-w>j
+" nnoremap L <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+
+
 :command! -nargs=0 Bc :call Bc() " Branch current
 function Bc()
     let cmd = 'git branch'
@@ -395,7 +422,8 @@ nnoremap tp gT
 nnoremap tw :windo bd<cr>
 xnoremap <expr> p 'pgv"'.v:register.'y`>'
 inoremap <C-d> <Del>
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+" nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+nnoremap <silent> L :<C-u>nohlsearch<CR><C-l>
 nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
 nmap # <Space><Space>:%s/<C-r>///g<Left><Left>
 xnoremap <silent> <Space> mz:call <SID>set_vsearch()<CR>:set hlsearch<CR>`z
@@ -1013,7 +1041,7 @@ nnoremap s :w<CR>
 nnoremap <C-g> :execute ":! open 'https://www.google.com/search?q=" . expand("<cword>") . "'"<CR>
 
 "nnoremap <C-j> :e **/ . expand("<cword>")
-nnoremap <C-j> :execute ":! fd " . expand("<cword>")<CR>
+" nnoremap <C-j> :execute ":! fd " . expand("<cword>")<CR>
 
 
 " nnoremap L :Lw<Space>
@@ -1082,7 +1110,7 @@ endfunction
 
 :command! -nargs=0 Memo :call Memo()
 function! Memo()
-   execute "edit ~/memo" 
+   execute "edit ~/memo"
 endfunction
 
 :command! -nargs=1 Nmap :call Nmap(<f-args>)

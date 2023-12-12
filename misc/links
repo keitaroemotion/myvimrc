@@ -18,6 +18,7 @@ if(len(sys.argv) < 2):
     sys.exit()
 
 args = sys.argv[1:]
+key  = args[0]
 
 alias = {}
 for line in lines:
@@ -25,17 +26,17 @@ for line in lines:
     key = lsp[0]
     url = lsp[-1]
     description = lsp[1:-1]
-    alias[key] = url
+    alias[key] = (url, ' '.join(description))
 
-def show_links(lines):
-    for line in lines:
-        lsp = line.split(' ')
-        key = lsp[0]
-        url = lsp[-1]
-        description = lsp[1:-1]
+def show_links(alias):
+    for key, url_description in alias.items():
+        url, description = url_description
 
-        print(f"key: {key}")
-        print(f"url: {url}")
-        print(f"description: {description}")
+        print(f"[{key}] {url[0:20]} | {description}")
 
-print(alias)
+if('-h' in args):
+    show_links(alias)
+else:
+    url, description = alias[key]
+    print(url)
+    os.system(f"open {url}")
