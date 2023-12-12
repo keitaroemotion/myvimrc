@@ -315,8 +315,19 @@ nnoremap い i
 nnoremap お o
 nnoremap O O
 
+:command! -nargs=? RunCom :call RunCom(<f-args>)
+function! RunCom(...)
+    if a:0 >= 1
+        execute ":bot term ++close ++rows=15"
+        while &buftype != 'terminal' | sleep 10m | endwhile
+          startinsert
+          call feedkeys(a:1 . "\<CR>", 'n')
+    end
+endfunction
+
 nnoremap <C-x><C-f> :e
-nnoremap C :!
+" nnoremap C :!
+nnoremap C :RunCom<Space>
 nnoremap <Down>  :res -5<CR>
 nnoremap <Up>    :res +5<CR>
 nnoremap <Left>  :vertical res -5<CR>
