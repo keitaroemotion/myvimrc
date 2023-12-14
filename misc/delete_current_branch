@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+#
+# pattern 1:
+#
+# 1. store current branch name to variable
+# 2. move to next branch
+# 3. remove current branch (force)
+#
+set -e
+current_branch=$(git branch --show-current)
+$HOME/.vim/sugavim/bin/git-move prev
+git br -D $current_branch
+
+#
+# pattern 2:
+#
+# 4. + git fetch --all
+# 5. + checkout to current branch
+#
+
+if [ "$1" == "-r" ]; then
+  git fetch --all
+  git checkout $current_branch
+fi

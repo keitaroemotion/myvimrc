@@ -1,3 +1,16 @@
+:command! -nargs=0 OpenConflictFiles :call OpenConflictFiles()
+function! OpenConflictFiles()
+    let diff_files = system('git diff --name-only --diff-filter=U')
+    let files = split(diff_files, "\n")
+    let file_list = filter(files, 'v:val != ""')
+    if len(file_list) > 0
+        let edit_command = ':! vim ' . join(file_list, ' ')
+        execute edit_command
+    endif
+endfunction
+
+command! -nargs=0 TrimMySqlComment :%s/^\/\*\!.*$//g
+
 :command! -nargs=0 OpenAllFiles :call OpenAllFiles()
 function! OpenAllFiles()
     let diff_files = system('git ls-files')
