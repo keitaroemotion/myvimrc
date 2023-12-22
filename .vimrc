@@ -1,6 +1,6 @@
-:hi StatusLine ctermfg=white ctermbg=grey
-:hi StatusLineNC ctermfg=grey guibg=#BDB76B " Inactive status line
-:hi VertSplit ctermfg=grey ctermbg=white
+":hi StatusLine ctermfg=white ctermbg=grey
+":hi StatusLineNC ctermfg=grey guibg=#BDB76B " Inactive status line
+":hi VertSplit ctermfg=grey ctermbg=white
 
 function! ExecuteCommandAndCaptureOutput(command)
     echo a:command
@@ -1307,3 +1307,5 @@ function! Count()
     let result = system("wc -m " . @%)
     echo result
 endfunction
+
+colorscheme shine
