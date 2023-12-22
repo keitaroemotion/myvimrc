@@ -1,3 +1,6 @@
+:hi StatusLine ctermfg=white ctermbg=grey
+:hi StatusLineNC ctermfg=grey guibg=#BDB76B " Inactive status line
+:hi VertSplit ctermfg=grey ctermbg=white
 
 function! ExecuteCommandAndCaptureOutput(command)
     echo a:command
@@ -428,8 +431,6 @@ filetype off
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
-inoremap <S-Tab> <C-V><Tab>
-
 "
 " Package managers
 "
@@ -438,14 +439,14 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 "Plugin 'tpope/vim-fugitive'
 Plugin 'preservim/nerdtree'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+"Plugin 'vim-airline/vim-airline'
+"Plugin 'vim-airline/vim-airline-themes'
 call vundle#end()
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline_theme='badwolf'
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
+"let g:airline_theme='badwolf'
 
 "nnoremap <C-s> :NERDTreeToggle<CR>
 nnoremap } :NERDTreeToggle<CR>
