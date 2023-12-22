@@ -1,3 +1,10 @@
+function! s:www(word) abort
+  let search_query = 'google.com/search?hl=en&q=' . a:word
+  execute 'terminal ++curwin ++shell w3m ' . shellescape(search_query)
+endfunction
+
+command! -nargs=1 WWW call s:www(<f-args>)
+
 ":hi StatusLine ctermfg=white ctermbg=grey
 ":hi StatusLineNC ctermfg=grey guibg=#BDB76B " Inactive status line
 ":hi VertSplit ctermfg=grey ctermbg=white
@@ -819,24 +826,18 @@ function! Sed(...)
     endif
 endfunction
 
+function! WebOpen(...)
+    " tabnew
+    " execute ':vert term ++close ++shell w3m https://' . a:1
+    execute ':term ++curwin ++shell w3m https://' . a:1
+endfunction
+
 "
 " Bookmark
 "
-command! L8           call WebOpen("localhost:8000")
-command! Ins          call system(g:script_dir . "ins o")
 command! Ctags        call system("ctags -R .")
-command! Gmail        call WebOpen("mail.google.com/mail/u/1/?pli=1#inbox")
-command! Twitter      call WebOpen("twitter.com/tobasojyo")
-command! Twitternew   call WebOpen("twitter.com/compose/tweet")
-command! Securitynews call WebOpen("www.scmagazine.com/home/security-news/")
+command! InfoQ        call WebOpen("www.infoq.com")
 command! Hackernews   call WebOpen("news.ycombinator.com")
-command! Atmarkit     call WebOpen("www.atmarkit.co.jp/ait/subtop/features/special/")
-command! Task         call WebOpen("calendar.google.com/calendar/b/1/r")
-command! Youtube      call WebOpen("youtube.com")
-command! Netflix      call WebOpen("www.netflix.com/browse")
-command! Sugawiki     call WebOpen("bitbucket.org/keisugano/personal-wiki/src/master/")
-command! Bible        call WebOpen("www.chinesebibleonline.com")
-command! Hub          call WebOpen("employment.en-japan.com/engineerhub/")
 command! Forbes       call WebOpen("www.forbes.com")
 command! File         call File()
 command! Xxd          call Xxd()
@@ -945,10 +946,6 @@ function! W3mopen(...)
     execute ':!' . "lynx https://www.google.com/search?q=" . expand("<cword>") . alphaquery . '&hr=lang_lt&hl=en'
 endfunction
 
-
-function! WebOpen(...)
-    let result = system("open https://" . a:1)
-endfunction
 
 command! DockerBuild call DockerBuild()
 function! DockerBuild()

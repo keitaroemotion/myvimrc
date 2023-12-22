@@ -17,6 +17,8 @@ chmod +x $SUGAVIM_BIN/*
 #
 # LLVM
 #
-brew install llvm
-cd ~/.vim/plugged/YouCompleteMe
-./install.py --clangd-completer
+# brew install llvm
+# cd ~/.vim/plugged/YouCompleteMe
+# ./install.py --clangd-completer
+
+brew install w3m
