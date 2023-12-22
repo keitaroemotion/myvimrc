@@ -431,7 +431,8 @@ set ma
 let g:ag_prg="/opt/homebrew/bin/ag --vimgrep"
 
 let g:ag_working_path_mode="r"
-nnoremap s :w<CR>
+nnoremap s :TabFix<CR>
+"nnoremap s :w<CR>:TabFix<CR>
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 set statusline=\PATH:\ %r%F\ \ \ \ \LINE:\ %l/%L/%P\ TIME:\ %{strftime('%c')}
 set nowrapscan
@@ -478,7 +479,6 @@ vnoremap <C-p> 8k
 vnoremap <C-y> "*y
 nnoremap x "_x
 tnoremap <C-z> exit<cr>
-nnoremap s "_s
 nnoremap tt :tabnew<cr>
 nnoremap tn gt
 nnoremap tp gT
@@ -1100,7 +1100,6 @@ endfunction
 
 let g:spf13_no_autochdir = 0
 
-nnoremap s :w<CR>
 nnoremap <C-g> :execute ":! open 'https://www.google.com/search?q=" . expand("<cword>") . "'"<CR>
 
 "nnoremap <C-j> :e **/ . expand("<cword>")
