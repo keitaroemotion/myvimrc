@@ -73,6 +73,21 @@ endfunction
 
 command! -nargs=0 Unique %sort u
 
+:command! -nargs=0 TabFixAll :call TabFixAll()
+function! TabFixAll()
+      let result = system('~/.vim/sugavim/bin/s2t ')
+      wa!
+      e!
+endfunction
+
+:command! -nargs=0 TabFix :call TabFix()
+function! TabFix()
+      let result = system('~/.vim/sugavim/bin/s2t ' . @%)
+      echo result
+      wa!
+      e!
+endfunction
+
 :command! -nargs=? Delete :call Delete(<f-args>)
 function! Delete(...)
     if a:0 >= 1

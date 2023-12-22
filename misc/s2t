@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+
+#
+# Space to Tab
+#
+
+# 1. read files (git ls-files)
+# 2. replace ^\s\s\s\s to ^\t
+# 3. write to files (update files)
+
+import sys
+import os
+import re 
+import subprocess
+
+def get_recent_commits(n=5):
+    """Get the last n commit hashes."""
+    commits = subprocess.check_output(['git', 'rev-list', '--max-count={}'.format(n), 'HEAD']).decode('utf-8')
+    return commits.splitlines()
+
+def get_changed_files(commit_hash):
+    """Get the list of files changed in a specific commit."""
+    files = subprocess.check_output(['git', 'diff-tree', '--no-commit-id', '--name-only', '-r', commit_hash]).decode('utf-8')
+    return files.splitlines()
+
+def list_git_files():
+    """List all files tracked by Git."""
+    output = subprocess.check_output(['git', 'ls-files']).decode('utf-8')
+    return output.splitlines()
+
+def replace_leading_spaces_with_tabs(file_path):
+    """Replace every group of four leading spaces at the beginning of lines with a tab."""
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    with open(file_path, 'w') as file:
+        for line in lines:
+            # Find the number of leading spaces (must be a multiple of 4)
+            match = re.match(r'^ +', line)
+            if match:
+                space_count = len(match.group())
+                tab_count = space_count // 4
+                line = '\t' * tab_count + (line[space_count:]).lstrip(' ')
+                line = line.replace("\t ", "\t")
+            file.write(line)
+
+def is_tab_file(file):
+    if file == 'Makefile':   return True 
+    if file.endswith('.go'): return True 
+    return False
+
+def main(file_path):
+    all_changed_files = [file_path]
+    if(not file_path):
+        recent_commits = get_recent_commits(5)
+
+        all_changed_files = set()
+        for commit in recent_commits:
+            changed_files = get_changed_files(commit)
+            all_changed_files.update(changed_files)
+
+    for file in all_changed_files:
+        if(os.path.exists(file) and is_tab_file(file)):
+            print(f"replacing ... {file}")
+            replace_leading_spaces_with_tabs(file)
+
+if(len(sys.argv) > 1):
+    file_path = sys.argv[1]
+
+if __name__ == "__main__":
+    main(file_path)
